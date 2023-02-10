@@ -1,0 +1,15 @@
+
+.search-input {
+  padding-left: 35px;
+  margin-left: 10px;
+  background: url("../../../../assets/search.png") no-repeat left;
+  background-size: 25px;
+  padding-block: 0.75rem;
+  border: 1px solid #75777a;
+  border-radius: 1.75rem;
+  width: 250px;
+}
+
+input:focus {
+  outline: none;
+}
