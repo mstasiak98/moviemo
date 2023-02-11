@@ -1,3 +1,13 @@
-<div class="w-full h-full">
+<div class="w-full h-full flex flex-col">
   <app-tile-list [data]="moviesData$"></app-tile-list>
+  <div class="my-4 w-full flex justify-end">
+    <mat-paginator
+      (page)="handlePageChange($event)"
+      [pageSize]="20"
+      [length]="(paginationData$ | async)?.total_results"
+      [hidePageSize]="true"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
 </div>

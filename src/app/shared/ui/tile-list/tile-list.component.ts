@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Movie } from '../../../movies/data-access/movie';
+import { ApiResponse } from '../../data-access/api-response';
 
 @Component({
   selector: 'app-tile-list',
