@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { IUserFirestore } from '../models/user.model';
-import { from, map, Observable, of, switchMap, tap } from 'rxjs';
+import { from, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUserData } from '../../state/user/user.selector';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -43,10 +43,10 @@ export class UserService {
             })
             .valueChanges()
             .pipe(
+              take(1),
               map((value) => {
                 return value[0];
-              }),
-              tap((resp) => console.log('srodek', resp))
+              })
             );
         } else {
           return of(null);

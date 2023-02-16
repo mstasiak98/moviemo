@@ -11,21 +11,16 @@ import { MoviesEffects } from './state/movies/movies.effects';
 import { moviesReducer } from './state/movies/movies.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { AngularFireModule, FirebaseApp } from '@angular/fire/compat';
+import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { userReducer } from './state/user/user.reducer';
 import { UserEffects } from './state/user/user.effects';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import {
-  AngularFirestore,
-  AngularFirestoreModule,
-} from '@angular/fire/compat/firestore';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { AutoFocusDirective } from './core/directive/auto-focus.directive';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
-  declarations: [AppComponent, AutoFocusDirective],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -45,6 +40,6 @@ import { AutoFocusDirective } from './core/directive/auto-focus.directive';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [AutoFocusDirective],
+  exports: [],
 })
 export class AppModule {}

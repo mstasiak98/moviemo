@@ -3,9 +3,9 @@ import { Movie } from '../../movies/data-access/movie';
 import { ApiResponse } from '../../shared/data-access/api-response';
 import { Genre } from '../../shared/data-access/genre';
 
-export const loadMovies = createAction('[MovieList] Load Movies');
+export const loadAllMovies = createAction('[MovieList] Load Movies');
 
-export const changePage = createAction(
+export const loadMovies = createAction(
   '[MovieList] Change Page',
   props<{ page: number }>()
 );
@@ -31,12 +31,12 @@ export const loadMovieGenresSuccess = createAction(
 
 export const setGenreFilter = createAction(
   '[Movie list] Set genre filter',
-  props<{ genreId: string }>()
+  props<{ genreId: string; page: number }>()
 );
 
 export const changeSortMode = createAction(
   '[Movie list] Change sort mode',
-  props<{ sortMode: string }>()
+  props<{ sortMode: string; page: number }>()
 );
 
 export const loadSnippedMoviesByKeyword = createAction(
@@ -47,4 +47,9 @@ export const loadSnippedMoviesByKeyword = createAction(
 export const loadSnippedMoviesByKeywordSuccess = createAction(
   '[Movies Search] Snipped of movies load success',
   props<{ data: Movie[] }>()
+);
+
+export const setKeywordFilter = createAction(
+  '[Movie List] Set keyword search',
+  props<{ keyword: string | null; page: number }>()
 );

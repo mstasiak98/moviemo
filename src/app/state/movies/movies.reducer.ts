@@ -1,16 +1,17 @@
 import { Movie } from '../../movies/data-access/movie';
 import { createReducer, on } from '@ngrx/store';
 import {
-  changePage,
+  loadMovies,
   changeSortMode,
   loadMovieGenres,
   loadMovieGenresSuccess,
-  loadMovies,
+  loadAllMovies,
   loadMoviesFailure,
   loadMoviesSuccess,
   loadSnippedMoviesByKeyword,
   loadSnippedMoviesByKeywordSuccess,
   setGenreFilter,
+  setKeywordFilter,
 } from './movies.actions';
 import { PaginationData } from '../../shared/data-access/api-response';
 import { Genre } from '../../shared/data-access/genre';
@@ -45,9 +46,18 @@ export const initialState: MoviesState = {
 export const moviesReducer = createReducer(
   initialState,
   //trigger loading movies
-  on(loadMovies, (state) => ({ ...state, status: 'loading' })),
+  on(loadAllMovies, (state) => ({
+    ...state,
+    status: 'loading',
+    sortType: 'popularity.desc',
+    genreFilter: '',
+    searchKeyword: null,
+    paginationData: { page: 1, total_pages: 0, total_results: 0 },
+    snippedKeywordResults: [],
+  })),
   //trigger change page
-  on(changePage, (state, { page }) => ({ ...state, status: 'loading' })),
+  on(loadMovies, (state, { page }) => ({ ...state, status: 'loading' })),
+
   //handle successfully loaded movies
   on(loadMoviesSuccess, (state, { data }) => ({
     ...state,
@@ -70,6 +80,7 @@ export const moviesReducer = createReducer(
   on(loadMovieGenres, (state) => ({
     ...state,
   })),
+
   on(loadMovieGenresSuccess, (state, { genres }) => ({
     ...state,
     genres: genres,
@@ -77,7 +88,10 @@ export const moviesReducer = createReducer(
   on(setGenreFilter, (state, { genreId }) => ({
     ...state,
     genreFilter: genreId,
+    sortType: 'popularity.desc',
+    searchKeyword: null,
     paginationData: { page: 1, total_pages: 0, total_results: 0 },
+    snippedKeywordResults: [],
   })),
   on(changeSortMode, (state, { sortMode }) => ({
     ...state,
@@ -95,5 +109,12 @@ export const moviesReducer = createReducer(
     ...state,
     snippedKeywordResults: data,
     searchInputStatus: 'success',
+  })),
+  on(setKeywordFilter, (state, { keyword }) => ({
+    ...state,
+    searchKeyword: keyword,
+    genreFilter: '',
+    sortType: 'popularity.desc',
+    paginationData: { page: 1, total_pages: 0, total_results: 0 },
   }))
 );

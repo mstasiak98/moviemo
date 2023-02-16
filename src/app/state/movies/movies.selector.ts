@@ -43,3 +43,8 @@ export const selectInputSearchStatus = createSelector(
   selectMovies,
   (state: MoviesState) => state.searchInputStatus
 );
+
+export const selectCurrentKeyword = createSelector(
+  selectMovies,
+  (state: MoviesState) => state.searchKeyword
+);

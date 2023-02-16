@@ -4,14 +4,17 @@ import { MoviedbApiService } from '../../shared/data-access/moviedb-api.service'
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {
-  changePage,
+  loadMovies,
   loadMovieGenres,
   loadMovieGenresSuccess,
-  loadMovies,
+  loadAllMovies,
   loadMoviesFailure,
   loadMoviesSuccess,
   loadSnippedMoviesByKeyword,
   loadSnippedMoviesByKeywordSuccess,
+  setGenreFilter,
+  setKeywordFilter,
+  changeSortMode,
 } from './movies.actions';
 import {
   catchError,
@@ -37,9 +40,9 @@ export class MoviesEffects {
     private movieGenreService: MovieGenreService
   ) {}
 
-  loadMovies$ = createEffect(() => {
+  loadAllMovies$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(loadMovies),
+      ofType(loadAllMovies),
       switchMap(() => {
         return this.handleApiResponse(
           this.movieService.getAllMoviesPaginated()
@@ -48,20 +51,26 @@ export class MoviesEffects {
     );
   });
 
-  changePage$ = createEffect(() => {
+  loadMovies$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(changePage),
+      ofType(loadMovies, setGenreFilter, setKeywordFilter, changeSortMode),
       switchMap(({ page }) => {
         return this.store.select(selectMoviesState).pipe(
           take(1),
           mergeMap((state) => {
-            return this.handleApiResponse(
-              this.movieService.getAllMoviesPaginated(
-                page,
-                state.sortType,
-                state.genreFilter
-              )
-            );
+            if (state.searchKeyword) {
+              return this.handleApiResponse(
+                this.movieService.getMoviesByKeyword(state.searchKeyword, page)
+              );
+            } else {
+              return this.handleApiResponse(
+                this.movieService.getAllMoviesPaginated(
+                  page,
+                  state.sortType,
+                  state.genreFilter
+                )
+              );
+            }
           })
         );
       })
@@ -85,7 +94,6 @@ export class MoviesEffects {
       ofType(loadSnippedMoviesByKeyword),
       switchMap(({ keyword, page }) => {
         return this.movieService.getMoviesByKeyword(keyword).pipe(
-          tap((res) => console.log('resu;t = ', res)),
           map((res: ApiResponse) =>
             loadSnippedMoviesByKeywordSuccess({ data: res.results })
           ),

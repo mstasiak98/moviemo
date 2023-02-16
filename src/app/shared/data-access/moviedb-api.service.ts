@@ -59,7 +59,7 @@ export class MoviedbApiService {
     return this.httpClient.get<ApiResponse>(url, {
       params: {
         api_key: this.API_KEY,
-        query: encodeURI(keyword),
+        query: keyword,
         page: page,
       },
     });

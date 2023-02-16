@@ -1,6 +1,7 @@
 <div class="flex gap-x-4 items-center box-border">
   <form [formGroup]="searchForm" class="relative">
     <input
+      placeholder="Search..."
       formControlName="keyword"
       type="text"
       [attr.aria-expanded]="inputExpanded"
@@ -10,7 +11,9 @@
       [attr.aria-expanded]="
         ((searchingStatus | async) === 'loading' ||
           (searchingStatus | async) === 'success') &&
-        inputExpanded
+        inputExpanded &&
+        f['keyword']?.value &&
+        f['keyword']?.value?.trim()?.length !== 0
       "
       class="search-results absolute right-0 top-[120%] w-[500px] bg-white rounded-2xl"
     >
@@ -56,12 +59,13 @@
               </p>
             </div>
           </div>
-          <p
+          <a
+            (click)="navigateToMore()"
             *ngIf="snippedMovies.length > 4"
             class="text-center cursor-pointer text-primary font-medium underline mb-4 hover:text-accent100"
           >
             Show More
-          </p>
+          </a>
           <p
             *ngIf="snippedMovies.length === 0"
             class="text-center font-medium p-6"
