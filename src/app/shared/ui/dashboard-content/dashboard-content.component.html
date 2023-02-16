@@ -1,13 +1,7 @@
 <div class="w-full h-full px-10 lg:px-16 py-10">
   <div *ngIf="data | async as homeView" class="flex flex-col">
-    <div class="mb-10">
-      {{ homeView.latest.backdrop_path }}
-      <img
-        class="rounded-2xl w-full h-[220px] object-cover object-center"
-        *ngIf="homeView.latest.backdrop_path"
-        src="{{ IMAGE_URL }}/{{ homeView.latest.backdrop_path }}"
-      />
-      <img class="rounded-2xl w-full h-[220px]" src="/assets/dummy.png" />
+    <div class="mb-10 relative">
+      <app-movie-tile [movie]="homeView.latest"></app-movie-tile>
     </div>
     <div class="mb-10">
       <div class="flex justify-between mb-4">

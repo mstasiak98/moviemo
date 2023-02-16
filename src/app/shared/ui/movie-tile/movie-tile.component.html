@@ -1,9 +1,16 @@
 <div class="movie-tile">
-  <a href="{{ movie.homepage }}">
+  <a routerLink="/../../../movies/details/{{ movie.id }}">
     <img
+      *ngIf="movie.backdrop_path ?? movie.poster_path; else placeholder"
       class="w-full h-full object-cover object-center rounded-2xl"
-      src="{{ IMAGE_URL }}/{{ movie.backdrop_path }}"
+      src="{{ IMAGE_URL }}/{{ movie.backdrop_path ?? movie.poster_path }}"
     />
+    <ng-template #placeholder>
+      <img
+        class="w-full h-full object-cover object-center rounded-2xl"
+        src="/assets/dummy.png"
+      />
+    </ng-template>
     <div class="photo-blur"></div>
     <div
       class="px-6 w-full h-1/2 grid grid-cols-3 absolute bottom-0 left-0 right-0 movie-description-rating"

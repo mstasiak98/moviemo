@@ -1,1 +1,88 @@
-<p>movie-detail works!</p>
+<div class="px-10 lg:px-16 py-10" *ngIf="movieDetails$ | async as movie">
+  <div class="h-[400px] w-full">
+    <img
+      *ngIf="movie.backdrop_path || movie.poster_path; else placeholder"
+      class="object-cover h-full w-full aspect-square rounded-2xl"
+      src="{{ IMAGE_URL }}/{{ movie.backdrop_path ?? movie.poster_path }}"
+    />
+    <ng-template #placeholder>
+      <img
+        class="object-cover h-full w-full aspect-square rounded-2xl"
+        src="/assets/dummy.png"
+      />
+    </ng-template>
+  </div>
+  <div class="w-full mt-6 flex flex-col md:flex-row gap-6">
+    <div class="hidden md:block min-w-[180px] max-w-[180px] mx-auto">
+      <img
+        *ngIf="movie.backdrop_path || movie.poster_path; else posterPlaceholder"
+        class="object-cover w-full aspect-[1/1.5]"
+        src="{{ IMAGE_URL }}/{{ movie.poster_path ?? movie.backdrop_path }}"
+      />
+      <ng-template #posterPlaceholder>
+        <img
+          class="object-cover w-full aspect-[1/1.5]"
+          src="/assets/dummy.png"
+        />
+      </ng-template>
+    </div>
+    <div class="flex flex-col 2xl:flex-row w-full gap-6">
+      <div class="w-full 2xl:w-1/2 flex flex-col gap-6">
+        <h2 class="text-white font-medium text-4xl">
+          {{ movie.title }}
+          <span class="text-sm text-accent100">({{ movie.release_date }})</span>
+        </h2>
+
+        <div class="flex flex-row gap-4">
+          <button class="px-2 py-2 bg-red-300 h-[2.5rem] rounded">
+            Avg: {{ movie.vote_average }}
+          </button>
+          <a href="https://imdb.com/title/{{ movie.imdb_id }}" target="_blank">
+            <button class="px-2 py-2 rounded bg-[#f5c518] h-[2.5rem]">
+              Imdb: {{ movie.popularity }}
+            </button>
+          </a>
+        </div>
+        <div class="w-full break-all">
+          <p class="text-white">{{ movie.overview }}</p>
+        </div>
+      </div>
+      <div class="w-full 2xl:w-1/2 flex flex-col gap-4">
+        <h2 class="text-white font-medium text-2xl">Details</h2>
+        <hr />
+        <p class="text-white">
+          <span class="font-medium">Language: </span>
+          {{ movie.original_language }}
+        </p>
+        <p class="text-white">
+          <span class="font-medium">Production: </span>
+          <span
+            *ngFor="let company of movie.production_companies; let idx = index"
+            >{{ company.name
+            }}{{
+              idx !== movie.production_companies.length - 1 ? ", &nbsp;" : ""
+            }}</span
+          >
+        </p>
+        <p class="text-white">
+          <span class="font-medium">Production countries: </span>
+          <span
+            *ngFor="let country of movie.production_countries; let idx = index"
+            >{{ country.name
+            }}{{
+              idx !== movie.production_countries.length - 1 ? ", &nbsp;" : ""
+            }}</span
+          >
+        </p>
+        <p class="text-white">
+          <span class="font-medium">Budget: </span>
+          {{ movie.budget | currency : "USD" }}
+        </p>
+        <p class="text-white">
+          <span class="font-medium">Revenue: </span>
+          {{ movie.revenue | currency : "USD" }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
