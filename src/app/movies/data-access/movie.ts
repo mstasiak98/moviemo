@@ -21,4 +21,6 @@ export interface Movie {
   vote_average: number;
   vote_count: number;
   poster_path: string | null;
+  production_companies: { id: number; name: string }[];
+  production_countries: { iso: string; name: string }[];
 }

@@ -5,6 +5,7 @@ import { MovieListRoutingModule } from './movie-list-routing.module';
 import { MovieListComponent } from './movie-list.component';
 import { TileListModule } from '../../../shared/ui/tile-list/tile-list.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [MovieListComponent],
@@ -13,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MovieListRoutingModule,
     TileListModule,
     MatPaginatorModule,
+    FormsModule,
   ],
 })
 export class MovieListModule {}

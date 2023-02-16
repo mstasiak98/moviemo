@@ -1,3 +1,25 @@
 .header {
   border-bottom: 1px solid #75777a;
 }
+
+.header-wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.nav-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  background: red;
+
+}

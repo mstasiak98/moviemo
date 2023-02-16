@@ -1,0 +1,9 @@
+.sidebar-wrapper {
+  display: grid;
+  grid-template-rows: min-content auto;
+  gap: 2rem 0;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}

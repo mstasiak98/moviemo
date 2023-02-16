@@ -1,1 +1,23 @@
-<p>auth-status works!</p>
+<div *ngIf="authenticatedUser$ | async as userData">
+  <div *ngIf="userData.user" class="flex flex-row cursor-pointer">
+    <button
+      class="flex"
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <img
+        class="cursor-pointer w-[45px] h-[45px] border border-white rounded-full"
+        src="/assets/avatar2.svg"
+      />
+      <span class="ml-2 my-auto arrow down"></span>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="logout()">Log out</button>
+    </mat-menu>
+  </div>
+  <div *ngIf="!userData.user" class="flex items-center">
+    <button (click)="googleLogin()">
+      <img class="w-[45px] h-[45px]" src="/assets/login.svg" />
+    </button>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarModule } from './core/feature/navbar/navbar.module';
@@ -10,19 +9,42 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MoviesEffects } from './state/movies/movies.effects';
 import { moviesReducer } from './state/movies/movies.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { AngularFireModule, FirebaseApp } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { userReducer } from './state/user/user.reducer';
+import { UserEffects } from './state/user/user.effects';
+import { MatDialogModule } from '@angular/material/dialog';
+
+import {
+  AngularFirestore,
+  AngularFirestoreModule,
+} from '@angular/fire/compat/firestore';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { AutoFocusDirective } from './core/directive/auto-focus.directive';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AutoFocusDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NavbarModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ movies: moviesReducer }, {}),
-    EffectsModule.forRoot([MoviesEffects]),
+    StoreModule.forRoot({ movies: moviesReducer, user: userReducer }, {}),
+    EffectsModule.forRoot([MoviesEffects, UserEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [AutoFocusDirective],
 })
 export class AppModule {}
