@@ -1,4 +1,4 @@
-import { IUser, IUserFirestore } from '../../shared/models/user.model';
+import { IUser } from '../../shared/data-access/user.model';
 import { createReducer, on } from '@ngrx/store';
 import {
   authError,
@@ -13,7 +13,7 @@ import {
   userFavMovieGenresNotFound,
   userNotAuthenticated,
 } from './user.actions';
-import { Genre } from '../../shared/data-access/genre';
+import { Genre } from '../../movies/data-access/genre';
 
 export interface UserState {
   user: IUser;

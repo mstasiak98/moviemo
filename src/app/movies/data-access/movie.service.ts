@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { MovieType } from '../../movies/data-access/movie-type';
+import { MovieType } from './movie-type';
 import { Observable } from 'rxjs';
-import { ApiResponse } from './api-response';
-import { Movie } from '../../movies/data-access/movie';
+import { ApiResponse } from '../../shared/data-access/api-response';
+import { Movie } from './movie';
 import { Store } from '@ngrx/store';
 import {
   selectAllMovies,
@@ -14,7 +14,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class MoviedbApiService {
+export class MovieService {
   private readonly API_URL = environment.theMovieDbApiUrl;
   private readonly API_KEY = environment.theMovieDbApiKey;
 
@@ -29,11 +29,15 @@ export class MoviedbApiService {
     });
   }
 
-  public getMoviesByType(movieType: MovieType) {
+  public getMoviesByType(
+    movieType: MovieType,
+    page: number = 1
+  ): Observable<ApiResponse> {
     const url = `${this.API_URL}/movie/${movieType}`;
-    return this.httpClient.get(url, {
+    return this.httpClient.get<ApiResponse>(url, {
       params: {
         api_key: this.API_KEY,
+        page: page,
       },
     });
   }

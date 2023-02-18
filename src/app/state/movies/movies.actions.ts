@@ -1,9 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Movie } from '../../movies/data-access/movie';
 import { ApiResponse } from '../../shared/data-access/api-response';
-import { Genre } from '../../shared/data-access/genre';
+import { Genre } from '../../movies/data-access/genre';
 
-export const loadAllMovies = createAction('[MovieList] Load Movies');
+export const loadAllMovies = createAction(
+  '[MovieList] Load Movies',
+  props<{ page: number }>()
+);
 
 export const loadMovies = createAction(
   '[MovieList] Change Page',
@@ -52,4 +55,13 @@ export const loadSnippedMoviesByKeywordSuccess = createAction(
 export const setKeywordFilter = createAction(
   '[Movie List] Set keyword search',
   props<{ keyword: string | null; page: number }>()
+);
+
+export const load = createAction(
+  '[Movie List] Set keyword search',
+  props<{ keyword: string | null; page: number }>()
+);
+export const loadNowPlaying = createAction(
+  '[Movie List] Load now playing movies',
+  props<{ page: number }>()
 );

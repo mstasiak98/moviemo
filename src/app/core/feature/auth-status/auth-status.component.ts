@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getUser, googleLogin, logout } from '../../../state/user/user.actions';
 import { selectUserData } from '../../../state/user/user.selector';
@@ -12,6 +12,8 @@ import { LoginComponent } from '../login/login.component';
   styleUrls: ['./auth-status.component.scss'],
 })
 export class AuthStatusComponent implements OnInit {
+  @Input() isMobile: boolean = false;
+
   isSignedIn: boolean = false;
   authenticatedUser$ = this.store.select(selectUserData);
   constructor(private store: Store<any>, public dialog: MatDialog) {}

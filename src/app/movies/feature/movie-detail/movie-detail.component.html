@@ -1,4 +1,10 @@
-<div class="px-10 lg:px-16 py-10" *ngIf="movieDetails$ | async as movie">
+<div class="px-6 2xl:px-16 py-10" *ngIf="movieDetails$ | async as movie">
+  <a
+    (click)="navBack()"
+    class="text-accent100 mb-4 block font-medium cursor-pointer hover:underline"
+  >
+    <span class="arrow rt-left"></span>Go Back
+  </a>
   <div class="h-[400px] w-full">
     <img
       *ngIf="movie.backdrop_path || movie.poster_path; else placeholder"
@@ -43,19 +49,30 @@
             </button>
           </a>
         </div>
-        <div class="w-full break-all">
+        <div class="w-full break-normal">
           <p class="text-white">{{ movie.overview }}</p>
         </div>
       </div>
       <div class="w-full 2xl:w-1/2 flex flex-col gap-4">
         <h2 class="text-white font-medium text-2xl">Details</h2>
         <hr />
-        <p class="text-white">
-          <span class="font-medium">Language: </span>
+        <p class="text-accent100">
+          <span class="font-medium text-white">Genre: </span>
+          <a
+            class="cursor-pointer"
+            routerLink="/movies/list"
+            [queryParams]="{ genre: genre.id }"
+            *ngFor="let genre of movie.genres; let idx = index"
+            >{{ genre.name
+            }}{{ idx !== movie.genres.length - 1 ? ", &nbsp;" : "" }}</a
+          >
+        </p>
+        <p class="text-accent100">
+          <span class="font-medium text-white">Language: </span>
           {{ movie.original_language }}
         </p>
-        <p class="text-white">
-          <span class="font-medium">Production: </span>
+        <p class="text-accent100">
+          <span class="font-medium text-white">Production: </span>
           <span
             *ngFor="let company of movie.production_companies; let idx = index"
             >{{ company.name
@@ -64,8 +81,8 @@
             }}</span
           >
         </p>
-        <p class="text-white">
-          <span class="font-medium">Production countries: </span>
+        <p class="text-accent100">
+          <span class="font-medium text-white">Production countries: </span>
           <span
             *ngFor="let country of movie.production_countries; let idx = index"
             >{{ country.name
@@ -74,12 +91,12 @@
             }}</span
           >
         </p>
-        <p class="text-white">
-          <span class="font-medium">Budget: </span>
+        <p class="text-accent100">
+          <span class="font-medium text-white">Budget: </span>
           {{ movie.budget | currency : "USD" }}
         </p>
-        <p class="text-white">
-          <span class="font-medium">Revenue: </span>
+        <p class="text-accent100">
+          <span class="font-medium text-white">Revenue: </span>
           {{ movie.revenue | currency : "USD" }}
         </p>
       </div>

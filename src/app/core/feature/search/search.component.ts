@@ -1,6 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { debounce, distinctUntilChanged, Subscription, tap, timer } from 'rxjs';
+import {
+  debounce,
+  distinctUntilChanged,
+  Subject,
+  Subscription,
+  takeUntil,
+  tap,
+  timer,
+} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { loadSnippedMoviesByKeyword } from '../../../state/movies/movies.actions';
 import {
@@ -19,11 +34,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
+  @Input() isMobile: boolean = false;
+  @Output() closeDropdown = new EventEmitter();
   readonly IMG_URL = environment.theMovieDbImgUrl;
   inputExpanded: boolean = false;
 
   searchForm: FormGroup;
-  formSubscription: Subscription;
+  destroy$: Subject<boolean> = new Subject<boolean>();
   currentKeywordSub: Subscription;
 
   snippedOfMovies = this.store.select(selectSnippedKeywordMovies);
@@ -40,8 +57,11 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.formSubscription = this.searchForm.valueChanges
-      .pipe(debounce(() => timer(600)))
+    this.searchForm.valueChanges
+      .pipe(
+        debounce(() => timer(600)),
+        takeUntil(this.destroy$)
+      )
       .subscribe((data: { keyword: string }) => {
         if (!data.keyword || data.keyword.trim().length === 0) return;
         this.store.dispatch(
@@ -49,8 +69,9 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
       });
 
-    this.currentKeywordSub = this.store
+    this.store
       .select(selectCurrentKeyword)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((val) => {
         // reset input field when store state changes
         if (!val) {
@@ -60,13 +81,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.formSubscription.unsubscribe();
-    this.currentKeywordSub.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   navigateToMore() {
     this.inputExpanded = !this.inputExpanded;
-    this.router.navigate(['movies', 'search'], {
+    this.closeDropdown.emit();
+    this.router.navigate(['movies', 'list'], {
       queryParams: {
         keyword: encodeURI(this.searchForm.get('keyword')?.value),
       },

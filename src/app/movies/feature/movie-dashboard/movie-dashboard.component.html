@@ -1,3 +1,7 @@
 <div class="w-full h-full">
-  <app-dashboard-content [data]="homeView$"></app-dashboard-content>
+  <app-dashboard-content
+    [latest]="latest$"
+    [popular]="popular$"
+    [topRated]="topRated$"
+  ></app-dashboard-content>
 </div>

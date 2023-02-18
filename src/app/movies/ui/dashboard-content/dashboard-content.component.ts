@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MovieHomeView } from '../../../movies/feature/movie-dashboard/movie-dashboard.component';
 import { environment } from '../../../../environments/environment';
+import { Movie } from '../../data-access/movie';
+import { ApiResponse } from '../../../shared/data-access/api-response';
 
 @Component({
   selector: 'app-dashboard-content',
@@ -11,5 +12,7 @@ import { environment } from '../../../../environments/environment';
 export class DashboardContentComponent {
   readonly IMAGE_URL = environment.theMovieDbImgUrl;
 
-  @Input() data: Observable<MovieHomeView>;
+  @Input() latest: Observable<Movie>;
+  @Input() popular: Observable<ApiResponse>;
+  @Input() topRated: Observable<ApiResponse>;
 }

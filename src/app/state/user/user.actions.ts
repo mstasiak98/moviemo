@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { IUserFirestore } from '../../shared/models/user.model';
+import { IUserFirestore } from '../../shared/data-access/user.model';
+import { create } from 'domain';
 
 export const getUser = createAction('[Auth] Get User');
 export const userAuthenticated = createAction(

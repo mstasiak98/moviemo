@@ -1,4 +1,4 @@
-import { Genre } from '../data-access/genre';
+import { Genre } from '../../movies/data-access/genre';
 
 export interface IUser {
   uid: string | null;
@@ -8,5 +8,4 @@ export interface IUser {
 export interface IUserFirestore {
   uid: string;
   movie_genres: Genre[];
-  tv_genres: Genre[];
 }

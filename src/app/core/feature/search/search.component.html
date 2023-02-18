@@ -1,10 +1,12 @@
-<div class="flex gap-x-4 items-center box-border">
-  <form [formGroup]="searchForm" class="relative">
+<!--Desktop version-->
+
+<div *ngIf="!isMobile" class="flex gap-x-4 items-center box-border">
+  <form [formGroup]="searchForm" class="relative w-full lg:w-auto">
     <input
       placeholder="Search..."
       formControlName="keyword"
       type="text"
-      [attr.aria-expanded]="inputExpanded"
+      [attr.aria-expanded]="inputExpanded || isMobile"
       class="search-input"
     />
     <div
@@ -83,6 +85,99 @@
   </form>
 
   <img
+    *ngIf="!isMobile"
+    (click)="inputExpanded = !inputExpanded"
+    class="cursor-pointer w-[35px] h-[35px]"
+    src="/assets/search.png"
+  />
+</div>
+
+<!--Mobile version-->
+
+<div *ngIf="isMobile" class="flex gap-x-4 items-center box-border w-full">
+  <form [formGroup]="searchForm" class="relative w-full">
+    <input
+      placeholder="Search..."
+      formControlName="keyword"
+      type="text"
+      class="w-full p-4 rounded-2xl"
+    />
+    <div
+      *ngIf="
+        ((searchingStatus | async) === 'loading' ||
+          (searchingStatus | async) === 'success') &&
+        f['keyword']?.value &&
+        f['keyword']?.value?.trim()?.length !== 0
+      "
+      class="mt-4 bg-transparent"
+    >
+      <ng-container
+        *ngIf="(searchingStatus | async) === 'success'; else loader"
+      >
+        <div
+          *ngIf="snippedOfMovies | async as snippedMovies"
+          class="w-full flex flex-col gap-4"
+        >
+          <div
+            *ngFor="let movie of snippedMovies | slice : 0 : 4"
+            class="w-full search-results-wrapper p-4 cursor-pointer rounded-2xl border-[1px] border-white"
+          >
+            <div class="h-[70px] w-[70px]">
+              <img
+                *ngIf="
+                  movie.poster_path || movie.backdrop_path;
+                  else imgPlaceholder
+                "
+                src="{{ IMG_URL }}/{{
+                  movie.poster_path ?? movie.backdrop_path
+                }}"
+                class="w-full h-full object-cover"
+              />
+              <ng-template #imgPlaceholder>
+                <img
+                  src="/assets/dummy.png"
+                  class="w-full h-full object-cover"
+                />
+              </ng-template>
+            </div>
+            <div class="flex flex-col truncate">
+              <p class="font-medium text-white truncate">{{ movie.title }}</p>
+              <p class="text-accent100">{{ movie.release_date }}</p>
+            </div>
+            <div class="flex items-center">
+              <p>
+                <span class="text-accent100">Vote: </span>
+                <span class="font-medium text-white">{{
+                  movie.vote_average
+                }}</span>
+              </p>
+            </div>
+          </div>
+          <a
+            (click)="navigateToMore()"
+            *ngIf="snippedMovies.length > 4"
+            class="text-center cursor-pointer text-white font-medium underline mb-4 hover:text-accent100"
+          >
+            Show More
+          </a>
+          <p
+            *ngIf="snippedMovies.length === 0"
+            class="text-center text-white font-medium p-6"
+          >
+            No results found
+          </p>
+        </div>
+      </ng-container>
+      <ng-template #loader>
+        <div class="p-10">
+          <p class="text-center text-white">Loading...</p>
+        </div>
+      </ng-template>
+    </div>
+  </form>
+
+  <img
+    *ngIf="!isMobile"
     (click)="inputExpanded = !inputExpanded"
     class="cursor-pointer w-[35px] h-[35px]"
     src="/assets/search.png"

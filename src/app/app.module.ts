@@ -18,6 +18,7 @@ import { UserEffects } from './state/user/user.effects';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +38,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     AngularFirestoreModule,
     AngularFireAuthModule,
     MatDialogModule,
+    NgxSkeletonLoaderModule.forRoot({ animation: 'progress-dark' }),
   ],
   providers: [],
   bootstrap: [AppComponent],

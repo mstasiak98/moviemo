@@ -94,6 +94,14 @@ html  {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
+
+.rt-left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+
+
 .select-input {
   padding-block: 0.75rem;
   padding-inline: 1.75rem;
@@ -131,4 +139,8 @@ html  {
 
 .mat-icon-button.mat-button-disabled.mat-button-disabled {
   color: #5d5b5b !important;
+}
+
+.hide-y-overflow {
+  overflow-y: hidden;
 }

@@ -12,10 +12,11 @@ import {
   loadSnippedMoviesByKeywordSuccess,
   setGenreFilter,
   setKeywordFilter,
+  loadNowPlaying,
 } from './movies.actions';
 import { PaginationData } from '../../shared/data-access/api-response';
-import { Genre } from '../../shared/data-access/genre';
-import { Status } from '../../shared/models/status';
+import { Genre } from '../../movies/data-access/genre';
+import { Status } from '../../shared/data-access/status';
 
 export interface MoviesState {
   movies: Movie[];
@@ -28,6 +29,7 @@ export interface MoviesState {
   genreFilter: string;
   snippedKeywordResults: Movie[];
   searchInputStatus: Status;
+  isNowPlayingDisplayed: boolean;
 }
 
 export const initialState: MoviesState = {
@@ -41,6 +43,7 @@ export const initialState: MoviesState = {
   genreFilter: '',
   snippedKeywordResults: [],
   searchInputStatus: 'pending',
+  isNowPlayingDisplayed: false,
 };
 
 export const moviesReducer = createReducer(
@@ -52,11 +55,15 @@ export const moviesReducer = createReducer(
     sortType: 'popularity.desc',
     genreFilter: '',
     searchKeyword: null,
-    paginationData: { page: 1, total_pages: 0, total_results: 0 },
     snippedKeywordResults: [],
+    isNowPlayingDisplayed: false,
   })),
   //trigger change page
-  on(loadMovies, (state, { page }) => ({ ...state, status: 'loading' })),
+  on(loadMovies, (state, { page }) => ({
+    ...state,
+    status: 'loading',
+    isNowPlayingDisplayed: false,
+  })),
 
   //handle successfully loaded movies
   on(loadMoviesSuccess, (state, { data }) => ({
@@ -92,11 +99,13 @@ export const moviesReducer = createReducer(
     searchKeyword: null,
     paginationData: { page: 1, total_pages: 0, total_results: 0 },
     snippedKeywordResults: [],
+    isNowPlayingDisplayed: false,
   })),
   on(changeSortMode, (state, { sortMode }) => ({
     ...state,
     sortType: sortMode,
     paginationData: { page: 1, total_pages: 0, total_results: 0 },
+    isNowPlayingDisplayed: false,
   })),
   //trigger loading snipped of movies by keyword for preview panel
   on(loadSnippedMoviesByKeyword, (state, { keyword }) => ({
@@ -116,5 +125,11 @@ export const moviesReducer = createReducer(
     genreFilter: '',
     sortType: 'popularity.desc',
     paginationData: { page: 1, total_pages: 0, total_results: 0 },
+    isNowPlayingDisplayed: false,
+  })),
+  //trigger loading popular movies
+  on(loadNowPlaying, (state, { page }) => ({
+    ...state,
+    status: 'loading',
   }))
 );

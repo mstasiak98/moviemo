@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Genre } from '../../data-access/genre';
+import { Genre } from '../../../movies/data-access/genre';
 import { Observable } from 'rxjs';
 import {
   FormBuilder,
@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserState } from '../../../state/user/user.reducer';
-import { IUserFirestore } from '../../models/user.model';
+import { IUserFirestore } from '../../data-access/user.model';
 import { UserService } from '../../data-access/user.service';
 import { Store } from '@ngrx/store';
 import { saveUserFavGenres } from '../../../state/user/user.actions';
@@ -23,10 +23,9 @@ export class AddGenreDialogComponent {
   genreForm: FormGroup;
   allGenres: Genre[];
   userGenres: Genre[];
-  modeType: 'movie' | 'tv';
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { genres: Genre[]; selectedGenres: Genre[]; user: UserState },
+    public data: { genres: Genre[]; selectedGenres: Genre[]; user: string },
     private formBuilder: FormBuilder,
     private userService: UserService,
     private store: Store,
@@ -40,13 +39,12 @@ export class AddGenreDialogComponent {
   }
 
   addGenres() {
-    const loggerUser = this.data.user.user;
-    if (!loggerUser) return;
+    const loggerUserId = this.data.user;
+    if (!loggerUserId) return;
 
     const user: IUserFirestore = {
-      uid: loggerUser.uid!,
+      uid: loggerUserId,
       movie_genres: this.genreForm.value.genre,
-      tv_genres: [],
     };
     this.store.dispatch(saveUserFavGenres({ data: user }));
     this.dialogRef.close();

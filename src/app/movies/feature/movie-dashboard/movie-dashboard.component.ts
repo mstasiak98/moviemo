@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin, Observable, tap } from 'rxjs';
+import { forkJoin, map, Observable, tap } from 'rxjs';
 import { MovieType } from '../../data-access/movie-type';
 import { Movie } from '../../data-access/movie';
-import { MoviedbApiService } from '../../../shared/data-access/moviedb-api.service';
+import { MovieService } from '../../data-access/movie.service';
 
 @Component({
   selector: 'app-movie-dashboard',
@@ -10,26 +10,11 @@ import { MoviedbApiService } from '../../../shared/data-access/moviedb-api.servi
   styleUrls: ['./movie-dashboard.component.scss'],
 })
 export class MovieDashboardComponent {
-  homeView$: Observable<MovieHomeView> = forkJoin(
-    [
-      this.movieDbService.getMoviesByType(MovieType.POPULAR),
-      this.movieDbService.getMoviesByType(MovieType.TOP_RATED),
-      this.movieDbService.getMoviesByType(MovieType.LATEST),
-    ],
-    (...results: any) => {
-      return {
-        popular: results[0].results.slice(0, 3),
-        top: results[1].results.slice(0, 2),
-        latest: results[2] as Movie,
-      } as MovieHomeView;
-    }
-  ).pipe(tap((v) => console.log('result2= ', v)));
+  latest$ = this.movieDbService
+    .getMoviesByType(MovieType.LATEST)
+    .pipe(map((res: any) => res));
+  popular$ = this.movieDbService.getMoviesByType(MovieType.POPULAR);
+  topRated$ = this.movieDbService.getMoviesByType(MovieType.TOP_RATED);
 
-  constructor(private movieDbService: MoviedbApiService) {}
-}
-
-export interface MovieHomeView {
-  popular: Movie[];
-  top: Movie[];
-  latest: Movie;
+  constructor(private movieDbService: MovieService) {}
 }

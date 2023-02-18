@@ -1,4 +1,4 @@
-import { Genre } from '../../shared/data-access/genre';
+import { Genre } from './genre';
 
 export interface Movie {
   id: number;

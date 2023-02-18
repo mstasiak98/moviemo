@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Movie } from '../../../movies/data-access/movie';
+import { Movie } from '../../data-access/movie';
 import { environment } from '../../../../environments/environment';
 
 @Component({

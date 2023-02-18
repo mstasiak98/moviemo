@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidebarContentComponent } from './sidebar-content.component';
+import { MovieGenresComponent } from './movie-genres.component';
 
-describe('SidebarContentComponent', () => {
-  let component: SidebarContentComponent;
-  let fixture: ComponentFixture<SidebarContentComponent>;
+describe('MovieGenresComponent', () => {
+  let component: MovieGenresComponent;
+  let fixture: ComponentFixture<MovieGenresComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SidebarContentComponent ]
+      declarations: [ MovieGenresComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SidebarContentComponent);
+    fixture = TestBed.createComponent(MovieGenresComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

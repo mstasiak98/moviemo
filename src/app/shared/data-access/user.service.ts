@@ -6,12 +6,22 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { IUserFirestore } from '../models/user.model';
-import { from, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { IUserFirestore } from './user.model';
+import {
+  distinctUntilChanged,
+  from,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUserData } from '../../state/user/user.selector';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ObjectHelper } from '../utils/object-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -43,7 +53,9 @@ export class UserService {
             })
             .valueChanges()
             .pipe(
-              take(1),
+              distinctUntilChanged((prev, curr) => {
+                return ObjectHelper.equals(prev, curr);
+              }),
               map((value) => {
                 return value[0];
               })

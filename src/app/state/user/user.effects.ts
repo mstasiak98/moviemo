@@ -33,7 +33,7 @@ import {
 import firebase from 'firebase/compat/app';
 import { UserService } from '../../shared/data-access/user.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { IUserFirestore } from '../../shared/models/user.model';
+import { IUserFirestore } from '../../shared/data-access/user.model';
 import { TypedAction } from '@ngrx/store/src/models';
 
 @Injectable()

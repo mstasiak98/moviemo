@@ -7,6 +7,14 @@ const routes: Routes = [
     path: '',
     component: MovieHomeComponent,
     children: [
+      /*
+      {
+        path: 'now-playing',
+        loadChildren: () =>
+          import('../movie-list/movie-list.module').then(
+            (m) => m.MovieListModule
+          ),
+      },
       {
         path: 'search',
         loadChildren: () =>
@@ -20,7 +28,7 @@ const routes: Routes = [
           import('../movie-list/movie-list.module').then(
             (m) => m.MovieListModule
           ),
-      },
+      },*/
       {
         path: 'details/:id',
         loadChildren: () =>
@@ -36,7 +44,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'all',
+        path: 'list',
         loadChildren: () =>
           import('../movie-list/movie-list.module').then(
             (m) => m.MovieListModule

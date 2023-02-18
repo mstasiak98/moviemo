@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
-import { MoviedbApiService } from '../../../shared/data-access/moviedb-api.service';
+import { MovieService } from '../../data-access/movie.service';
 import { environment } from '../../../../environments/environment';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-movie-detail',
@@ -22,6 +23,12 @@ export class MovieDetailComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private moviedbService: MoviedbApiService
+    private moviedbService: MovieService,
+    private router: Router,
+    private location: Location
   ) {}
+
+  navBack() {
+    this.location.back();
+  }
 }
