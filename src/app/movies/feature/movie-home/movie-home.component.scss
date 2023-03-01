@@ -2,3 +2,9 @@
   height: 100%;
   margin-inline: auto;
 }
+
+.sidebar-wrapper {
+  display: grid;
+  grid-template-rows: min-content auto;
+  gap: 2rem 0;
+}

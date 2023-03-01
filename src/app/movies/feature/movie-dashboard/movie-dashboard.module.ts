@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MovieDashboardRoutingModule } from './movie-dashboard-routing.module';
 import { MovieDashboardComponent } from './movie-dashboard.component';
-import { DashboardContentModule } from '../../../shared/ui/dashboard-content/dashboard-content.module';
+import { DashboardContentModule } from '../../ui/dashboard-content/dashboard-content.module';
 
 @NgModule({
   declarations: [MovieDashboardComponent],

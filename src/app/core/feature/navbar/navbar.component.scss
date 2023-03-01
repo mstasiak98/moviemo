@@ -1,3 +1,20 @@
 .header {
   border-bottom: 1px solid #75777a;
 }
+
+.header-wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.active {
+  color: white
+}
+
+.mobile-header {
+  @apply block lg:hidden px-6 py-8 bg-primary900 2xl:px-16 lg:py-8 box-border z-50 border-b border-b-[1px] border-[#75777a];
+}
+
+.mobile-header[data-expanded="true"] {
+  @apply fixed inset-0;
+}

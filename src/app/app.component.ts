@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from './shared/data-access/user.service';
+import { IUserFirestore } from './shared/data-access/user.model';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'moviemo_frontend';
 
-  asd: number = 2;
+  public constructor() {}
 }

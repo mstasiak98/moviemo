@@ -1,0 +1,91 @@
+<div class="movie-tile">
+  <a routerLink="/../../../movies/details/{{ movie.id }}">
+    <img
+      *ngIf="movie.backdrop_path || movie.poster_path; else placeholder"
+      class="w-full h-full object-cover object-center rounded-2xl"
+      src="{{ IMAGE_URL }}/{{ movie.backdrop_path ?? movie.poster_path }}"
+    />
+    <ng-template #placeholder>
+      <img
+        class="w-full h-full object-cover object-center rounded-2xl"
+        src="/assets/dummy.png"
+      />
+    </ng-template>
+    <div class="photo-blur"></div>
+    <div
+      class="px-6 w-full h-1/2 grid grid-cols-3 absolute bottom-0 left-0 right-0 movie-description-rating"
+    >
+      <div class="cursor-pointer">
+        <svg
+          width="40px"
+          height="40px"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#ffffff"
+          fill-opacity="0.7"
+          class="bi bi-play-circle"
+        >
+          <path
+            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+          />
+          <path
+            d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"
+          />
+        </svg>
+      </div>
+      <div class="flex flex-col truncate">
+        <p class="text-white text-sm font-medium z-10 truncate">
+          {{ movie.title }}
+        </p>
+        <p class="text-xs font-medium text-accent100 truncate">
+          {{ movie.release_date | date }}
+        </p>
+      </div>
+      <div class="flex flex-row items-center gap-x-2">
+        <svg
+          width="40px"
+          height="40px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15.3909 5.21L16.8009 8.02999C16.9909 8.41999 17.5009 8.78999 17.9309 8.86999L20.4809 9.28999C22.1109 9.55999 22.4909 10.74 21.3209 11.92L19.3309 13.91C19.0009 14.24 18.8109 14.89 18.9209 15.36L19.4909 17.82C19.9409 19.76 18.9009 20.52 17.1909 19.5L14.8009 18.08C14.3709 17.82 13.6509 17.82 13.2209 18.08L10.8309 19.5C9.12091 20.51 8.08093 19.76 8.53093 17.82L9.10093 15.36C9.21093 14.9 9.02093 14.25 8.69093 13.91L6.70094 11.92C5.53094 10.75 5.91094 9.56999 7.54094 9.28999L10.0909 8.86999C10.5209 8.79999 11.0309 8.41999 11.2209 8.02999L12.6309 5.21C13.3809 3.68 14.6209 3.68 15.3909 5.21Z"
+            stroke="#ffffff"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            opacity="0.8"
+          />
+          <path
+            opacity="0.4"
+            d="M8 5H2"
+            stroke="#ffffff"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            opacity="0.4"
+            d="M5 19H2"
+            stroke="#ffffff"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            opacity="0.4"
+            d="M3 12H2"
+            stroke="#ffffff"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span class="text-white opacity-80 text-lg font-medium">{{
+          movie.vote_average
+        }}</span>
+      </div>
+    </div>
+  </a>
+</div>

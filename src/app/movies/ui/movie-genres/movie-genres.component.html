@@ -1,0 +1,58 @@
+<div>
+  <div *ngIf="(authUser$ | async)?.user as user">
+    <h2 class="text-xl font-medium mb-4">Favourite Genres</h2>
+    <mat-chip-list
+      *ngIf="user || (userFavGenres$ | async)"
+      aria-label="User favourite genres"
+      class="mb-4"
+    >
+      <mat-chip
+        selected
+        routerLink="/movies/list"
+        [queryParams]="{ genre: favGenre.id }"
+        color="primary"
+        class="cursor-pointer"
+        *ngFor="let favGenre of userFavGenres$ | async"
+        >{{ favGenre.name }}</mat-chip
+      >
+    </mat-chip-list>
+    <div class="mt-4" *ngIf="(authUser$ | async)?.user">
+      <button
+        *ngIf="user"
+        mat-icon-button
+        class="flex items-center"
+        (click)="openDialog = true"
+      >
+        <mat-icon class="text-accent100 hover:text-white">add_circle</mat-icon>
+        <span class="ml-1 text-accent100 hover:text-white"
+          >Add your favourite genre</span
+        >
+      </button>
+    </div>
+    <div *ngIf="genres$ | async as allGenres">
+      <app-genre-dialog
+        *ngIf="user.uid"
+        [openDialog]="openDialog"
+        [allGenres]="allGenres"
+        [userGenres]="(userFavGenres$ | async) ?? []"
+        [user]="user.uid"
+        (dialogClosed)="openDialog = false"
+      ></app-genre-dialog>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-xl font-medium mb-4">All Genres</h2>
+  <mat-chip-list *ngIf="genres$ | async as genres" aria-label="Movie genres">
+    <mat-chip routerLink="/movies/list" class="cursor-pointer">All</mat-chip>
+
+    <mat-chip
+      routerLink="/movies/list"
+      [queryParams]="{ genre: genre.id }"
+      class="cursor-pointer"
+      *ngFor="let genre of genres"
+      >{{ genre.name }}</mat-chip
+    >
+  </mat-chip-list>
+</div>

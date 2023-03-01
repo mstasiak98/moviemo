@@ -1,0 +1,8 @@
+<div class="w-full h-full px-6 2xl:px-16 py-10 flex flex-col">
+  <div
+    *ngIf="data | async as data"
+    class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 2xl:grid-cols-3 gap-8"
+  >
+    <app-movie-tile *ngFor="let movie of data" [movie]="movie"></app-movie-tile>
+  </div>
+</div>

@@ -1,7 +1,8 @@
 .main-layout {
-  border: 1px solid red;
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
 }

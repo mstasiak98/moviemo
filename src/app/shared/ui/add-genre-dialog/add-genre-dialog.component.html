@@ -1,0 +1,31 @@
+<div class="w-full p-8">
+  <h2 mat-dialog-title>List of your favourite genres</h2>
+  <form [formGroup]="genreForm" (ngSubmit)="addGenres()">
+    <div mat-dialog-content class="w-full">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Favourite genres</mat-label>
+        <mat-select
+          multiple
+          formControlName="genre"
+          [compareWith]="objectComparationFunction"
+        >
+          <mat-option *ngFor="let genre of allGenres" [value]="genre">{{
+            genre.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button mat-dialog-close>Close</button>
+      <button
+        [disabled]="genreForm.pristine"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
