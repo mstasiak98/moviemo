@@ -16,7 +16,7 @@
         <button mat-menu-item (click)="logout()">Log out</button>
       </mat-menu>
     </div>
-    <div *ngIf="!userData.user" class="lg:block flex items-center">
+    <div *ngIf="!userData.user" class="lg:flex items-center flex items-center">
       <button (click)="googleLogin()">
         <img class="w-[45px] h-[45px]" src="/assets/login.svg" />
       </button>

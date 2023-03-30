@@ -7,28 +7,6 @@ const routes: Routes = [
     path: '',
     component: MovieHomeComponent,
     children: [
-      /*
-      {
-        path: 'now-playing',
-        loadChildren: () =>
-          import('../movie-list/movie-list.module').then(
-            (m) => m.MovieListModule
-          ),
-      },
-      {
-        path: 'search',
-        loadChildren: () =>
-          import('../movie-list/movie-list.module').then(
-            (m) => m.MovieListModule
-          ),
-      },
-      {
-        path: 'genre/:id',
-        loadChildren: () =>
-          import('../movie-list/movie-list.module').then(
-            (m) => m.MovieListModule
-          ),
-      },*/
       {
         path: 'details/:id',
         loadChildren: () =>
