@@ -15,16 +15,16 @@ import {
   selectPaginationData,
 } from '../../../state/movies/movies.selector';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { sortModes } from '../../utils/sort-mode';
-import { forkJoin, Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 
 @Component({
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.scss'],
 })
-export class MovieListComponent implements OnInit, OnDestroy {
+export class MovieListComponent implements OnDestroy {
   moviesData$ = this.store.select(selectAllMovies);
   paginationData$ = this.store.select(selectPaginationData);
   sortModes = sortModes;
@@ -55,62 +55,13 @@ export class MovieListComponent implements OnInit, OnDestroy {
   constructor(
     private movieDbService: MovieService,
     private store: Store<any>,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
-
-  ngOnInit() {
-    /*    this.route.queryParamMap
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params) => {
-        if (params.has('genre')) {
-          this.store.dispatch(
-            setGenreFilter({ genreId: params.get('genre')!, page: 1 })
-          );
-        } else if (params.has('keyword')) {
-          this.store.dispatch(
-            setKeywordFilter({
-              keyword: decodeURI(params.get('keyword')!),
-              page: 1,
-            })
-          );
-        } else if (params.has('type')) {
-          this.store.dispatch(loadNowPlaying({ page: 1 }));
-        } else {
-          this.store.dispatch(loadAllMovies());
-        }
-      });*/
-
-    console.log('init list', this.route.snapshot.queryParams);
-  }
 
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
-
-  /*  handleSearchAllMovies(): void {
-    if (this.router.url === '/movies/list/all') {
-      this.store.dispatch(loadAllMovies());
-    }
-  }*/
-
-  /*  handleSearchPopular(): void {
-    if (this.router.url === '/movies/list/now-playing') {
-      this.store.dispatch(loadNowPlaying({ page: 1 }));
-      this.isNowPlayingMode = true;
-    }
-  }
-
-  handleSearchByGenre(): void {
-    this.route.paramMap.subscribe((params) => {
-      if (params.has('id')) {
-        this.store.dispatch(
-          setGenreFilter({ genreId: params.get('id')!, page: 1 })
-        );
-      }
-    });
-  }*/
 
   handlePageChange($event: PageEvent) {
     const currentParam = this.route.snapshot.queryParamMap;
@@ -124,17 +75,4 @@ export class MovieListComponent implements OnInit, OnDestroy {
       changeSortMode({ sortMode: $event.target.value, page: 1 })
     );
   }
-
-  /*  handleSearchByKeyword(): void {
-    this.route.queryParamMap.subscribe((params) => {
-      if (params.has('keyword')) {
-        this.store.dispatch(
-          setKeywordFilter({
-            keyword: decodeURI(params.get('keyword')!),
-            page: 1,
-          })
-        );
-      }
-    });
-  }*/
 }

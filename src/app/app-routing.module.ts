@@ -9,6 +9,16 @@ const routes: Routes = [
         (m) => m.MovieHomeModule
       ),
   },
+  {
+    path: '',
+    redirectTo: 'movies',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: 'movies',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

@@ -10,7 +10,6 @@ import {
   selectUserFavMovieGenres,
 } from '../../../state/user/user.selector';
 import { getUserMovieFavGenres } from '../../../state/user/user.actions';
-import { AddGenreDialogComponent } from '../../../shared/ui/add-genre-dialog/add-genre-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
